@@ -64,6 +64,19 @@ class _QuizScreenState extends State<QuizScreen> {
     });
   }
 
+  void _resetQuiz() {
+    setState(() {
+      _questions = [];
+      _currentQuestionIndex = 0;
+      _score = 0;
+      _loading = true;
+      _answered = false;
+      _selectedAnswer = "";
+      _feedbackText = "";
+    });
+    _loadQuestions();
+  }
+
   Widget _buildOptionButton(String option) {
     return ElevatedButton(
       onPressed: _answered ? null : () => _submitAnswer(option),
@@ -104,8 +117,20 @@ class _QuizScreenState extends State<QuizScreen> {
     if (_currentQuestionIndex >= _questions.length) {
       return Scaffold(
         body: Center(
-          child:
-              Text('Quiz Finished! Your Score: $_score/${_questions.length}'),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Quiz Finished! Your Score: $_score/${_questions.length}',
+                style: TextStyle(fontSize: 20),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _resetQuiz,
+                child: Text('Start New Quiz'),
+              ),
+            ],
+          ),
         ),
       );
     }
