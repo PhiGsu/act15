@@ -79,21 +79,19 @@ class _QuizScreenState extends State<QuizScreen> {
 
   Widget _buildOptionButton(String option) {
     return Padding(
-      padding: const EdgeInsets.all(8.0), // Adjust the spacing here
+      padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
         onPressed: _answered ? null : () => _submitAnswer(option),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.lightBlue,
-          side: _answered // Conditionally remove the border
+          side: _answered
               ? const BorderSide(color: Colors.transparent, width: 0)
               : const BorderSide(color: Colors.blue, width: 2),
         ),
         child: Text(
           option,
           style: TextStyle(
-            color: _answered
-                ? Colors.blueGrey
-                : Colors.white, // Conditionally change text color
+            color: _answered ? Colors.blueGrey : Colors.white,
           ),
         ),
       ),
