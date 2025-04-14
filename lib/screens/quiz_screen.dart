@@ -33,9 +33,10 @@ class _QuizScreenState extends State<QuizScreen> {
         _loading = false;
       });
     } catch (e) {
-      print(e);
-
-      // Handle error appropriately
+      setState(() {
+        _loading = false;
+        _feedbackText = "Failed to load questions. Please try again later.";
+      });
     }
   }
 
@@ -76,6 +77,27 @@ class _QuizScreenState extends State<QuizScreen> {
     if (_loading) {
       return Scaffold(
         body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (_questions.isEmpty) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                _feedbackText,
+                style: TextStyle(fontSize: 16, color: Colors.red),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _loadQuestions,
+                child: Text('Retry'),
+              ),
+            ],
+          ),
+        ),
       );
     }
 
